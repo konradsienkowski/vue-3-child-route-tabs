@@ -7,7 +7,7 @@ First of all, we're going to create a fresh, new application using `> npm init v
 
 Once you follow the instructions on installing dependencies and running the app, you can start customizing the application. My first step was to simplify `app.vue` a bit:
 
-```
+```vue
 <template>
   <nav>
     <RouterLink to="/">Home</RouterLink>
@@ -37,7 +37,7 @@ Since we're focusing on nested/child routes in this article, there's no need to 
 
 As we have a simple structure for our views/pages, now it's time to include them in router configuration. Let's open `router/index.ts` now and adjust it to our needs:
 
-```
+```typescript
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -90,7 +90,7 @@ In this step, we're going to create our tab component, include it in the first-l
 
 Let's start from the `<script setup>` section. We're using `useRouter()` composable there to access the router instance. Then, we're using it to define `tabs` computed property.
 
-```
+```vue
 <script setup lang="ts">
 import { computed, type ComputedRef } from 'vue'
 import { useRouter, RouterView, type RouteRecordRaw } from 'vue-router'
@@ -109,7 +109,7 @@ const tabs: ComputedRef<RouteRecordRaw[] | undefined> = computed(() => {
 
 After getting the current route name using `router.currentRoute` property, we're using it to find it within the routes array (either within top-level routes and their children) and return its children routes. Now it's time to include it in the component template:
 
-```
+```vue
 <template>
   <div class="tabs" v-if="tabs">
     <nav class="tabs__nav">
@@ -140,7 +140,7 @@ Inside the `<div>` wrapper, we have two parts of our component:
 
 Now we can include our component in the `TabsView.vue` code:
 
-```
+```vue
 <template>
   <div class="view">
     <AppTabs />
@@ -153,7 +153,7 @@ import AppTabs from '@/components/AppTabs.vue'
 ```
 
 And take a look at the result:
-/insert gif here/
+![Vite-App](https://user-images.githubusercontent.com/53014647/227538928-e0bc14f1-24d6-4bee-be82-2b2ff107b962.gif)
 
 ## Extending & styling up the tabs
 
@@ -163,7 +163,7 @@ Our tabs work nice, and we can easily include them in any view that has child ro
 
 Before extending our component's code, let's add [meta field](https://router.vuejs.org/guide/advanced/meta.html) to each nested route in `router/index.ts`:
 
-```
+```typescript
 children: [
   {
     name: 'about',
@@ -194,7 +194,7 @@ children: [
 
 Now, we can use `tabLabel` value in our `AppTabs.vue` component:
 
-```
+```vue
 <RouterLink
   v-for="tab in tabs"
   :key="tab.name"
@@ -209,7 +209,7 @@ Now, we can use `tabLabel` value in our `AppTabs.vue` component:
 
 Our tabs navigation is going to look better with icons. Let's install Google's Material Symbols library using npm package: `npm install material-symbols@latest` and include it in `main.ts` (`main.js` if you're not using typescript):
 
-```
+```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -226,7 +226,7 @@ app.mount('#app')
 
 Then, we can add `tabIcon` properties to route meta fields, filling it with the icon codes:
 
-```
+```typescript
 children: [
   {
     name: 'about',
@@ -257,7 +257,7 @@ children: [
 
 After that, we're ready to include them in the component:
 
-```
+```vue
 <RouterLink
   v-for="tab in tabs"
   :key="tab.name"
@@ -272,12 +272,13 @@ After that, we're ready to include them in the component:
 ```
 
 Done! We have custom icons & labels based on route meta fields displayed in our Tabs component. Now it's time to add final styling touch with CSS.
+![icons](https://user-images.githubusercontent.com/53014647/227538411-4cc40d28-23a9-4cfc-8d2f-ba2256386a77.png)
 
 ## Styling up the component
 
 You can style up the component on your own, customizing it fully to your needs or use code below including it in `AppTabs.vue` below:
 
-```
+```vue
 <style>
 .tabs {
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -320,4 +321,4 @@ You can style up the component on your own, customizing it fully to your needs o
 _Note: Following [BEM naming convention](https://getbem.com/naming/) is easier using SCSS but I didn't want to fill the example with extra dependencies._
 
 Our tab component looks pretty slick now:
-/gif number 2/
+![Vite-App-2](https://user-images.githubusercontent.com/53014647/227538875-2e9a6b1d-e345-447c-8af5-66f510915709.gif)
