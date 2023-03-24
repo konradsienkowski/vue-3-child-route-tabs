@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/** Layout **/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+:root {
+  --green: #10b981;
+}
+html {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+body {
+  margin: 0;
+}
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/** Navigation **/
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.nav a {
+  color: rgba(0, 0, 0, 0.87);
+  padding: 1.25rem 2rem;
+  text-decoration: none;
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+.nav a.router-link-active {
+  color: var(--green);
+  font-weight: 600;
+}
+
+/** Transition: Fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition-timing-function: ease;
+  transition-duration: 0.5s;
+  transition-property: height, opacity;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
